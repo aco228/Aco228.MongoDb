@@ -51,7 +51,7 @@ public interface IMongoRepository<TDbContext, TDocument> : IMongoBaseCollection
     void InsertOrUpdate(TDocument document);
 
     Task InsertOrUpdateAsync(TDocument documents);
-    Task TryInsertOrUpdateAsync(TDocument documents);
+    Task<bool> TryInsertOrUpdateAsync(TDocument documents);
     Task InsertOrUpdateMultipleAsync(List<TDocument> document);
     Task InsertOrUpdateMultipleInBatchAsync(List<TDocument> document, int batchSize = 50, TimeSpan? delayBetween = null);
 

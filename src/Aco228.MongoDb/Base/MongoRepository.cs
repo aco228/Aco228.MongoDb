@@ -300,15 +300,16 @@ public class MongoRepository<TDbContext, TDocument> : IMongoRepository<TDbContex
         int a = 0;
     }
 
-    public async Task TryInsertOrUpdateAsync(TDocument documents)
+    public async Task<bool> TryInsertOrUpdateAsync(TDocument documents)
     {
         try
         {
             await InsertOrUpdateAsync(documents);
+            return true;
         }
         catch
         {
-            // nothign
+            return false;
         }
     }
 

@@ -4,6 +4,8 @@ public interface IMongoRepoTransactionalManager<TDbContext, T>
     where TDbContext : IMongoDbContext 
     where T : MongoDocument
 {
+    void SetInsertAfter(uint newVal);
+    void DontInsertAfter();
     Task InsertOrUpdateAsync(T document);
     Task DeleteAsync(T document);
     Task Finish();
@@ -24,6 +26,9 @@ public class MongoRepoTransactionalManager<TDbContext, T> : IMongoRepoTransactio
         _repository = repository;
         _insertAfter = insertAfter;
     }
+
+    public void SetInsertAfter(uint newVal) => _insertAfter = newVal;
+    public void DontInsertAfter() => SetInsertAfter(uint.MaxValue);
 
     public Task InsertOrUpdateAsync(T document)
     {
