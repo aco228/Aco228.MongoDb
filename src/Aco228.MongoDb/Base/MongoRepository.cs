@@ -68,8 +68,8 @@ public class MongoRepository<TDbContext, TDocument> : IMongoRepository<TDbContex
         _collection.Indexes.DropOne(nameOfParameter, CancellationToken.None);
     }
 
-    public IMongoRepoLaterExecution<TDbContext, TDocument> CreateLaterExecution(uint numberOfDocuments = 15)
-        => new MongoRepoLaterExecution<TDbContext, TDocument>(this, numberOfDocuments);
+    public IMongoRepoTransactionalManager<TDbContext, TDocument> CreateTransactionManager(uint numberOfDocuments = 15)
+        => new MongoRepoTransactionalManager<TDbContext, TDocument>(this, numberOfDocuments);
 
     public IEnumerable<T> ProjectAll<T>()
     {

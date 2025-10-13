@@ -1,6 +1,6 @@
 ﻿namespace Aco228.MongoDb.Base.Services;
 
-public interface IMongoRepoLaterExecution<TDbContext, T> 
+public interface IMongoRepoTransactionalManager<TDbContext, T>  
     where TDbContext : IMongoDbContext 
     where T : MongoDocument
 {
@@ -9,7 +9,7 @@ public interface IMongoRepoLaterExecution<TDbContext, T>
     Task Finish();
 }
 
-public class MongoRepoLaterExecution<TDbContext, T> : IMongoRepoLaterExecution<TDbContext, T>
+public class MongoRepoTransactionalManager<TDbContext, T> : IMongoRepoTransactionalManager<TDbContext, T>
     where TDbContext : IMongoDbContext 
     where T : MongoDocument
 {
@@ -19,7 +19,7 @@ public class MongoRepoLaterExecution<TDbContext, T> : IMongoRepoLaterExecution<T
     private uint _insertAfter = 10;
     private int CurrentCount => _insertRequests.Count + _deleteRequests.Count;
 
-    public MongoRepoLaterExecution(IMongoRepository<TDbContext, T> repository, uint insertAfter = 10)
+    public MongoRepoTransactionalManager(IMongoRepository<TDbContext, T> repository, uint insertAfter = 10)
     {
         _repository = repository;
         _insertAfter = insertAfter;

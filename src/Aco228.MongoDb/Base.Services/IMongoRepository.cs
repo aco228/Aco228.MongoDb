@@ -21,7 +21,7 @@ public interface IMongoRepository<TDbContext, TDocument> : IMongoBaseCollection
     IMongoCollection<TDocument> GetCollection();
     Task CreateIndex(string nameOfParameter, bool isUnique);
     void DeleteIndex(string nameOfParameter);
-    IMongoRepoLaterExecution<TDbContext, TDocument> CreateLaterExecution(uint numberOfDocuments = 15);
+    IMongoRepoTransactionalManager<TDbContext, TDocument> CreateTransactionManager(uint numberOfDocuments = 15);
 
     IEnumerable<T> ProjectAll<T>();
     IEnumerable<TDocument> FilterBy(Expression<Func<TDocument, bool>> filterExpression);
