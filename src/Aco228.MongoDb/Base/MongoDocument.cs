@@ -16,7 +16,9 @@ public abstract class MongoDocument
     public ObjectId Id { get; set; }
 
     [IgnoreMember] public DateTime CreatedUtc { get; set; } = DateTime.MinValue;
+    [MongoIndex] [IgnoreMember] public long CreatedUtcTs { get; set; } = 0;
     [IgnoreMember] public DateTime UpdatedUtc { get; set; } = DateTime.MinValue;
+    [MongoIndex] [IgnoreMember] public long UpdatedUtcTs { get; set; } = 0;
     
     [BsonIgnore] [JsonIgnore] [IgnoreMember] internal string? Hash { get; set; }
     [BsonIgnore] [JsonIgnore] [IgnoreMember] public bool ShouldUpdate { get; set; } = false;

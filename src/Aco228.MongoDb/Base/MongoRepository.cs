@@ -210,7 +210,7 @@ public class MongoRepository<TDbContext, TDocument> : IMongoRepository<TDbContex
     }
 
     public virtual async Task<TDocument?> FindOneAsync(Expression<Func<TDocument, bool>> filterExpression)
-    {
+    { 
         var result =  await _collection.Find(filterExpression).FirstOrDefaultAsync();
         return result;
     }
@@ -266,10 +266,13 @@ public class MongoRepository<TDbContext, TDocument> : IMongoRepository<TDbContex
                 ? ObjectId.Parse(genericId.StringToLimitHex()) 
                 : ObjectId.GenerateNewId();
             document.CreatedUtc = DateTime.UtcNow;
+            document.CreatedUtcTs = DateTime.UtcNow.ToUnixTimestampMilliseconds();
             document.UpdatedUtc = DateTime.UtcNow;
+            document.UpdatedUtcTs = DateTime.UtcNow.ToUnixTimestampMilliseconds();
         }
         else
         {
+            document.UpdatedUtcTs = DateTime.UtcNow.ToUnixTimestampMilliseconds();
             document.UpdatedUtc = DateTime.UtcNow;
         }
         
@@ -287,11 +290,14 @@ public class MongoRepository<TDbContext, TDocument> : IMongoRepository<TDbContex
                 : ObjectId.GenerateNewId();
             
             document.CreatedUtc = DateTime.UtcNow;
+            document.CreatedUtcTs = DateTime.UtcNow.ToUnixTimestampMilliseconds();
             document.UpdatedUtc = DateTime.UtcNow;
+            document.UpdatedUtcTs = DateTime.UtcNow.ToUnixTimestampMilliseconds();
             await Task.Delay(TimeSpan.FromMilliseconds(150));
         }
         else
         {
+            document.UpdatedUtcTs = DateTime.UtcNow.ToUnixTimestampMilliseconds();
             document.UpdatedUtc = DateTime.UtcNow;
         }
 
